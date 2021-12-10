@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="25dp"
+    android:background="@drawable/corner_shape"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvYourname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/kitto"
+        android:gravity="center"
+        android:text="@string/your_name"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+
+    <EditText
+        android:id="@+id/edtUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="35dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/corner_button"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/sanfancisco"
+        android:hint="@string/nhapten"
+        android:maxWidth="250dp"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+
+    <Button
+        android:id="@+id/btnOK"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button3"
+        android:fontFamily="@font/kitto"
+        android:text="OK"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

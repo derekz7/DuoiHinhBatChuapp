@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name" translatable="false">Đuổi hình bắt chữ</string>
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="instagram" translatable="false">Instagram</string>
+    <string name="discord" translatable="false">Discord</string>
+    <string name="play_game">Play game</string>
+    <string name="leaderboard" translatable="false">Leaderboard</string>
+    <string name="start" translatable="false">Start</string>
+    <string name="createusercomplete">Thành công</string>
+    <string name="your_name" translatable="false">Your name</string>
+    <string name="nhapten">Nhập tên của bạn</string>
+    <string name="replay">Chơi lại</string>
+    <string name="time_out">Hết giờ !!!</string>
+    <string name="exit">Thoát</string>
+    <string name="resume">Tiếp tục</string>
+    <string name="pause">Tạm dừng</string>
+    <string name="mess_exit">Bạn có thực sự muốn thoát?</string>
+    <string name="next">Chơi tiếp</string>
+    <string name="ql_player">Quản lý người chơi</string>
+    <string name="ql_cau_hoi">Quản lý câu hỏi</string>
+    <string name="skip">Bỏ qua</string>
+    <string name="restart">Chơi lại từ đầu</string>
+</resources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="#FF3C3C"
+        android:background="@drawable/shadow_btn"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="10dp"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/tvTimeOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time_out"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/sanfancisco"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/imgTimeOut"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/time_out"
+            android:contentDescription="@string/time_out" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnExit"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/exit"
+                android:layout_marginVertical="20dp"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:elevation="10dp"
+
+                android:layout_marginHorizontal="5dp"
+                android:backgroundTint="#2CCF32"
+                android:fontFamily="@font/sanfancisco"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_baseline_keyboard_return_24"
+                android:drawablePadding="15dp"
+                android:background="@drawable/corner_button"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/btnReplay"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/replay"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:layout_marginHorizontal="5dp"
+                android:backgroundTint="#03A9F4"
+                android:fontFamily="@font/sanfancisco"
+                android:textStyle="bold"
+                android:drawableStart="@drawable/ic_baseline_replay_24"
+                android:drawablePadding="15dp"
+                android:background="@drawable/corner_button"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

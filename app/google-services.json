@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "748033015725",
+    "firebase_url": "https://duoihinhbatchu-405d4-default-rtdb.firebaseio.com",
+    "project_id": "duoihinhbatchu-405d4",
+    "storage_bucket": "duoihinhbatchu-405d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748033015725:android:4a91015866204912232b24",
+        "android_client_info": {
+          "package_name": "com.example.duoihinhbatchu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748033015725-63dvkmg8869fr0kakejlihsujes758h1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.duoihinhbatchu",
+            "certificate_hash": "a3061febdffdb058d8bc8439649653f2fab3ac96"
+          }
+        },
+        {
+          "client_id": "748033015725-gnen7u1sv585k0skn3ru7lh3srbeadi8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzvppKzUYCBtkjS1aJtwj7LCVPbdc27A8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748033015725-gnen7u1sv585k0skn3ru7lh3srbeadi8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="play_game">Play game</string>
+    <string name="createusercomplete">Complete</string>
+    <string name="nhapten">Type your name</string>
+    <string name="replay">Replay</string>
+    <string name="time_out">Time Out !!!</string>
+    <string name="exit">Exit</string>
+    <string name="resume">Resume</string>
+    <string name="pause">Pause</string>
+    <string name="mess_exit">Do you really want to quit?</string>
+    <string name="next">Next</string>
+    <string name="ql_player">Player Management</string>
+    <string name="ql_cau_hoi">Question Management</string>
+    <string name="skip">Skip</string>
+    <string name="restart">Restart</string>
+</resources>

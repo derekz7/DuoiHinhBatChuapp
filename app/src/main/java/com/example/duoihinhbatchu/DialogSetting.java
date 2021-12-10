@@ -1,5 +1,6 @@
 package com.example.duoihinhbatchu;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -96,7 +97,7 @@ public class DialogSetting {
                 PlaySound.animClick(v);
                 PlaySound.playClick(v.getContext());
                 context.startActivity(new Intent(context, MainActivity.class));
-                dialog.cancel();
+                dialog.dismiss();
             }
         });
         if (MainActivity.mpBackground.isPlaying()) {

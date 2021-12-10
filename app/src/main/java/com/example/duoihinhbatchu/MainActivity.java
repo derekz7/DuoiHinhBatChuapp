@@ -228,6 +228,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     public void dialogCreateUser(int gravity) {
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -261,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
                 PlaySound.animClick(v);
                 if (userDB.checkAdmin(listUser,name)) {
                     startActivity(new Intent(MainActivity.this, QuanLyActivity.class));
+                    dialog.dismiss();
                     finish();
                 } else if (name.length() == 0 || !userDB.checkUsername(listUser, name) || name.length() > 15){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

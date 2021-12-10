@@ -12,8 +12,14 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".QuanLyCauHoi"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".QuanLyActivity"
-            android:exported="true" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -28,6 +34,7 @@
         <activity
             android:name=".ChoiGameActivity"
             android:screenOrientation="portrait"
+            android:noHistory="true"
             tools:ignore="LockedOrientationActivity" />
     </application>
 

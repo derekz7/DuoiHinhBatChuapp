@@ -8,6 +8,11 @@ public class CauHoi {
     public CauHoi() {
     }
 
+    public CauHoi(String imgUrl, String dapan) {
+        this.imgUrl = imgUrl;
+        this.dapan = dapan;
+    }
+
     public CauHoi(int id, String imgUrl, String dapan) {
         this.id = id;
         this.imgUrl = imgUrl;

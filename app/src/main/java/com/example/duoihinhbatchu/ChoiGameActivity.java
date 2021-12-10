@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -26,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,12 +60,12 @@ public class ChoiGameActivity extends AppCompatActivity {
     private int index = 0, currentQuestions = 0, heart = 3;
     private User user;
     private UserDB db;
-    private DialogSetting dialogSetting;
     private int score, newScore = 0;
     private CountDownTimer countDownTimer;
     private SharedPreferences sharedPreferences;
     private Animation anim_heart;
     private LinearLayout view_heart;
+    private AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +85,7 @@ public class ChoiGameActivity extends AppCompatActivity {
     }
 
     private void loadView() {
-        dapAnAdapter = new DapAnAdapter(this, R.layout.item_gridview, arrDapan);
+        dapAnAdapter = new DapAnAdapter(this, R.layout.item_dapan, arrDapan);
         traLoiAdapter = new DapAnAdapter(this, R.layout.item_traloi, arrTraloi);
         gridViewDapAn.setAdapter(dapAnAdapter);
         gridViewTraLoi.setAdapter(traLoiAdapter);
@@ -93,7 +97,7 @@ public class ChoiGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PlaySound.animClick(v);
                 PlaySound.playClick(v.getContext());
-                dialogSetting.show(Gravity.CENTER);
+                dialog_setting();
             }
         });
 
@@ -142,6 +146,7 @@ public class ChoiGameActivity extends AppCompatActivity {
             }
         });
     }
+
 
     //show đáp án
     private void showDapAn() {
@@ -325,12 +330,12 @@ public class ChoiGameActivity extends AppCompatActivity {
     private void getData() {
         db = new UserDB();
         listQuestions = MainActivity.listQuestions;
-        dialogSetting = new DialogSetting(this);
         arrDapan = new ArrayList<>();
         arrTraloi = new ArrayList<>();
         sharedPreferences = getSharedPreferences("currentQuestion", MODE_PRIVATE);
         currentQuestions = sharedPreferences.getInt("currentQuestion", 0);
         anim_heart = AnimationUtils.loadAnimation(this, R.anim.anim_zoomout);
+        audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
     }
 
     @SuppressLint("SetTextI18n")
@@ -558,6 +563,143 @@ public class ChoiGameActivity extends AppCompatActivity {
             }
         });
 
+        dialog.show();
+    }
+
+
+    private void dialog_setting() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_settings);
+        final ImageButton igbExit, igbHome, igbMusic, igbFB;
+        final SeekBar skMusic;
+        igbHome = dialog.findViewById(R.id.igbHome);
+        igbMusic = dialog.findViewById(R.id.igbMusic);
+        igbFB = dialog.findViewById(R.id.igbFB);
+        skMusic = dialog.findViewById(R.id.skbarVolume);
+        igbExit = dialog.findViewById(R.id.igbExit);
+        if (MainActivity.mpBackground.isPlaying()) {
+            igbMusic.setImageResource(R.drawable.music);
+        } else {
+            igbMusic.setImageResource(R.drawable.mute);
+        }
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.windowAnimations = R.style.DialogAnimation;
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(true);
+        igbFB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlaySound.animClick(v);
+                PlaySound.playClick(v.getContext());
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://www.facebook.com/eelcud"));
+                startActivity(intent);
+            }
+        });
+
+        igbExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlaySound.animClick(v);
+                PlaySound.playClick(v.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChoiGameActivity.this);
+                builder.setIcon(R.drawable.cancel);
+                builder.setTitle(R.string.exit);
+                builder.setMessage(R.string.mess_exit);
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                    }
+                });
+                builder.create().show();
+            }
+        });
+        igbHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlaySound.animClick(v);
+                PlaySound.playClick(v.getContext());
+                startActivity(new Intent(ChoiGameActivity.this, MainActivity.class));
+                dialog.dismiss();
+                finish();
+            }
+        });
+        if (MainActivity.mpBackground.isPlaying()) {
+            igbMusic.setImageResource(R.drawable.music);
+            skMusic.setEnabled(true);
+            skMusic.setAlpha(1);
+        } else {
+            igbMusic.setImageResource(R.drawable.mute);
+            skMusic.setEnabled(false);
+            skMusic.setAlpha(0.5F);
+        }
+        igbMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlaySound.animClick(v);
+                PlaySound.playClick(v.getContext());
+                if (MainActivity.mpBackground.isPlaying()) {
+                    igbMusic.setImageResource(R.drawable.mute);
+                    MainActivity.mpBackground.pause();
+                    skMusic.setEnabled(false);
+                    skMusic.setAlpha((float) 0.5);
+                } else {
+                    MainActivity.mpBackground.start();
+                    igbMusic.setImageResource(R.drawable.music);
+                    skMusic.setEnabled(true);
+                    skMusic.setAlpha((float) 1);
+                }
+
+            }
+        });
+        int max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int currentVol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        skMusic.setMax(max);
+        skMusic.setProgress(currentVol);
+        skMusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                countDownTimer.cancel();
+            }
+        });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                countDownTimer.start();
+            }
+        });
         dialog.show();
     }
 

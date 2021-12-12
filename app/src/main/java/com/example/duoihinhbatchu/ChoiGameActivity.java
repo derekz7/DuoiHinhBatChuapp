@@ -57,7 +57,7 @@ public class ChoiGameActivity extends AppCompatActivity {
     private List<String> arrTraloi;
     private DapAnAdapter dapAnAdapter, traLoiAdapter;
     private String dapan = "";
-    private int index = 0, currentQuestions = 0, heart = 3;
+    private int index = 0, currentQuestions = 0, heart = 3, countCorrect = 0;
     private User user;
     private UserDB db;
     private int score, newScore = 0;
@@ -187,6 +187,10 @@ public class ChoiGameActivity extends AppCompatActivity {
         setCountDownTimer();
         if (currentQuestions >= listQuestions.size()) {
             // Hoan thanh
+            Intent intent = new Intent(ChoiGameActivity.this,WonActivity.class);
+            intent.putExtra("countCorrect",countCorrect);
+            intent.putExtra("score",score);
+            startActivity(intent);
             Toast.makeText(ChoiGameActivity.this, "End", Toast.LENGTH_SHORT).show();
         } else {
             progressBar.setVisibility(View.VISIBLE);
@@ -244,6 +248,7 @@ public class ChoiGameActivity extends AppCompatActivity {
                 } else if (time <= timer / 1.5) {
                     newScore = 100;
                 } else newScore = 150;
+                countCorrect++;
                 score += newScore;
                 user.setScore(score);
                 db.updateScore(user.getName(), score);
@@ -331,6 +336,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         arrTraloi = new ArrayList<>();
         sharedPreferences = getSharedPreferences("currentQuestion", MODE_PRIVATE);
         currentQuestions = sharedPreferences.getInt("currentQuestion", 0);
+        countCorrect = sharedPreferences.getInt("countCorrect", 0);
         anim_heart = AnimationUtils.loadAnimation(this, R.anim.anim_zoomout);
         audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
     }
@@ -471,6 +477,7 @@ public class ChoiGameActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        countCorrect = 0;
                         currentQuestions = 0;
                         ViewQuestions();
                         dialog.dismiss();
@@ -547,6 +554,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         tvDapAn.setText("Đáp án: "+listQuestions.get(currentQuestions).getDapan());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("currentQuestion", (currentQuestions+1));
+        editor.putInt("countCorrect", countCorrect);
         editor.apply();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override

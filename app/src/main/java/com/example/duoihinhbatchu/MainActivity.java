@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.duoihinhbatchu.Adapter.UserAdapter;
 import com.example.duoihinhbatchu.Database.CauHoiDB;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<CauHoi> listQuestions;
     private User user;
     private SharedPreferences sharedPreferences;
+    private int currentQuestion = 0;
 
 
     @Override
@@ -76,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
                 PlaySound.playClick(v.getContext());
                 PlaySound.animClick(v);
                 imgLogo.startAnimation(slide_up);
+                Toast.makeText(MainActivity.this,""+currentQuestion+"|"+listQuestions.size(), Toast.LENGTH_SHORT).show();
+                if (currentQuestion == listQuestions.size() || currentQuestion ==0) {
+                    btnPlay.setText("New Game");
+                } else{
+                    btnPlay.setText("Resume Game");
+                }
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -109,14 +117,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PlaySound.playClick(v.getContext());
                 PlaySound.animClick(v);
+                if (btnPlay.getText().equals("New Game")) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("countCorrect", 0);
+                    editor.putInt("currentQuestion",0);
+                    editor.apply();
+                }
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         buttonScaleAnim();
-                        if (user.getName().equals("null")){
+                        if (user.getName().equals("null")) {
                             dialogCreateUser(Gravity.CENTER);
-                        }else {
-                            User log = userDB.getUser(user.getName(),listUser);
+                        } else {
+                            User log = userDB.getUser(user.getName(), listUser);
                             Intent intent = new Intent(MainActivity.this, ChoiGameActivity.class);
                             intent.putExtra("user", log);
                             startActivity(intent);
@@ -136,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         dialog_Leaderboard();
                     }
-                },500);
+                }, 500);
             }
         });
 
@@ -147,17 +161,19 @@ public class MainActivity extends AppCompatActivity {
         listQuestions = cauHoiDB.getListCauHoi();
         userDB = new UserDB();
         listUser = userDB.getDataUser();
+        sharedPreferences = getSharedPreferences("currentQuestion", MODE_PRIVATE);
+        currentQuestion = sharedPreferences.getInt("currentQuestion", 0);
     }
 
-    private void buttonScaleAnim(){
+    private void buttonScaleAnim() {
         btnPlay.startAnimation(animBtn);
         btnChart.startAnimation(animBtn);
     }
 
-    private List<User> getListPlayer(List<User> list){
+    private List<User> getListPlayer(List<User> list) {
         List<User> listPlayer = new ArrayList<>();
-        for (User user : list){
-            if (user.getIsAdmin() == 0){
+        for (User user : list) {
+            if (user.getIsAdmin() == 0) {
                 listPlayer.add(user);
             }
         }
@@ -174,11 +190,11 @@ public class MainActivity extends AppCompatActivity {
         layout_play = findViewById(R.id.layout_play);
         btnChart = findViewById(R.id.btnLeaderBoard);
         btnPlay = findViewById(R.id.btnPlayGame);
-        sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
-        user = new User(sharedPreferences.getString("username","null"));
+        sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
+        user = new User(sharedPreferences.getString("username", "null"));
     }
 
-    private void sapXep(){
+    private void sapXep() {
         Collections.sort(listPlayer, new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
@@ -195,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPrepared(MediaPlayer mp) {
                 mpBackground.start();
                 mpBackground.setLooping(true);
-                mpBackground.setVolume(0.5f,0.5f);
+                mpBackground.setVolume(0.5f, 0.5f);
             }
         });
         mpBackground.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -258,12 +274,12 @@ public class MainActivity extends AppCompatActivity {
                 String name = edtName.getText().toString().trim();
                 PlaySound.playClick(v.getContext());
                 PlaySound.animClick(v);
-                if (name.length() > 0){
-                    if (userDB.checkAdmin(listUser,name)) {
+                if (name.length() > 0) {
+                    if (userDB.checkAdmin(listUser, name)) {
                         startActivity(new Intent(MainActivity.this, QuanLyActivity.class));
                         dialog.dismiss();
                         finish();
-                    } else if (!userDB.checkUsername(listUser, name) || name.length() > 15){
+                    } else if (!userDB.checkUsername(listUser, name) || name.length() > 15) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setIcon(R.drawable.cancel);
                         builder.setTitle("Tên người dùng đã tồn tại");
@@ -275,16 +291,16 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                         builder.create().show();
-                    }else {
+                    } else {
                         user = new User(name);
                         userDB.createUser(user, getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("username",user.getName());
-                        editor.putString("diem","0");
+                        editor.putString("username", user.getName());
+                        editor.putString("diem", "0");
                         editor.apply();
                         dialog.dismiss();
                     }
-                }else {
+                } else {
                     edtName.setError("Bạn chưa nhập tên của mình!");
                 }
             }
@@ -311,9 +327,9 @@ public class MainActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         listPlayer = getListPlayer(listUser);
         sapXep();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcvUser.setLayoutManager(layoutManager);
-        UserAdapter userAdapter = new UserAdapter(listPlayer,this);
+        UserAdapter userAdapter = new UserAdapter(listPlayer, this);
         rcvUser.setAdapter(userAdapter);
         dialog.show();
     }

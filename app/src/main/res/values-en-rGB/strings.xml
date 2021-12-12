@@ -14,4 +14,6 @@
     <string name="ql_cau_hoi">Question Management</string>
     <string name="skip">Skip</string>
     <string name="restart">Restart</string>
+    <string name="yourscore">Your HightScore</string>
+    <string name="share_your_score">Share your score</string>
 </resources>

@@ -20,4 +20,6 @@
     <string name="ql_cau_hoi">Quản lý câu hỏi</string>
     <string name="skip">Bỏ qua</string>
     <string name="restart">Chơi lại từ đầu</string>
+    <string name="yourscore">Điểm của bạn:</string>
+    <string name="share_your_score">Chia sẻ điểm của bạn</string>
 </resources>

@@ -258,32 +258,35 @@ public class MainActivity extends AppCompatActivity {
                 String name = edtName.getText().toString().trim();
                 PlaySound.playClick(v.getContext());
                 PlaySound.animClick(v);
-                if (userDB.checkAdmin(listUser,name)) {
-                    startActivity(new Intent(MainActivity.this, QuanLyActivity.class));
-                    dialog.dismiss();
-                    finish();
-                } else if (name.length() == 0 || !userDB.checkUsername(listUser, name) || name.length() > 15){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setIcon(R.drawable.cancel);
-                    builder.setTitle("Tên người dùng đã tồn tại");
-                    builder.setMessage("Vui lòng chọn tên khác < 15 kí tự !");
-                    builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
+                if (name.length() > 0){
+                    if (userDB.checkAdmin(listUser,name)) {
+                        startActivity(new Intent(MainActivity.this, QuanLyActivity.class));
+                        dialog.dismiss();
+                        finish();
+                    } else if (!userDB.checkUsername(listUser, name) || name.length() > 15){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setIcon(R.drawable.cancel);
+                        builder.setTitle("Tên người dùng đã tồn tại");
+                        builder.setMessage("Vui lòng chọn tên khác < 15 kí tự !");
+                        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.create().show();
+                    }else {
+                        user = new User(name);
+                        userDB.createUser(user, getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username",user.getName());
+                        editor.putString("diem","0");
+                        editor.apply();
+                        dialog.dismiss();
+                    }
                 }else {
-                    user = new User(name);
-                    userDB.createUser(user, getApplicationContext());
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("username",user.getName());
-                    editor.putString("diem","0");
-                    editor.apply();
-                    dialog.dismiss();
+                    edtName.setError("Bạn chưa nhập tên của mình!");
                 }
-
             }
         });
         dialog.show();

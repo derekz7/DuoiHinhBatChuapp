@@ -1,4 +1,4 @@
-package com.example.duoihinhbatchu.Module;
+package com.example.duoihinhbatchu.Models;
 
 public class CauHoi {
     private int id;

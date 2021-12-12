@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.duoihinhbatchu.Module.User;
+import com.example.duoihinhbatchu.Models.User;
 import com.example.duoihinhbatchu.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.duoihinhbatchu.Module.CauHoi;
+import com.example.duoihinhbatchu.Models.CauHoi;
 import com.example.duoihinhbatchu.R;
 import com.squareup.picasso.Picasso;
 

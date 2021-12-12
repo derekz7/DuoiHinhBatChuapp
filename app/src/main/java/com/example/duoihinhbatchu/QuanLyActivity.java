@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.duoihinhbatchu.Database.CauHoiDB;
-import com.example.duoihinhbatchu.Module.CauHoi;
+import com.example.duoihinhbatchu.Models.CauHoi;
 
 import java.util.List;
 

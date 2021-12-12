@@ -35,8 +35,8 @@ import android.widget.Toast;
 
 import com.example.duoihinhbatchu.Adapter.DapAnAdapter;
 import com.example.duoihinhbatchu.Database.UserDB;
-import com.example.duoihinhbatchu.Module.CauHoi;
-import com.example.duoihinhbatchu.Module.User;
+import com.example.duoihinhbatchu.Models.CauHoi;
+import com.example.duoihinhbatchu.Models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ChoiGameActivity extends AppCompatActivity {
-    private int timer = 10;
+    private int timer = 30;
     private List<CauHoi> listQuestions;
     private TextView tvScore;
     private ProgressBar progressBar;
@@ -184,6 +184,7 @@ public class ChoiGameActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void ViewQuestions() {
+        setCountDownTimer();
         if (currentQuestions >= listQuestions.size()) {
             // Hoan thanh
             Toast.makeText(ChoiGameActivity.this, "End", Toast.LENGTH_SHORT).show();
@@ -194,13 +195,9 @@ public class ChoiGameActivity extends AppCompatActivity {
             CauHoi cauHoi = listQuestions.get(currentQuestions);
             System.out.println(currentQuestions);
             Picasso.get().load(cauHoi.getImgUrl()).into(imgQuestion);
-            dapan = cauHoi.getDapan();
+            dapan = StringUtils.xoaDauString(cauHoi.getDapan());
             showDapAn();
             showTraLoi();
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("currentQuestion", currentQuestions);
-            editor.apply();
-            setCountDownTimer();
             countDownTimer.start();
         }
     }
@@ -240,7 +237,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         }
         if (a.length() == dapan.length()) {
             if (a.equalsIgnoreCase(dapan)) {
-                Toast.makeText(ChoiGameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ChoiGameActivity.this, "Correct", Toast.LENGTH_SHORT).show();
                 int time = progressBar.getProgress();
                 if (time <= timer / 3) {
                     newScore = 50;
@@ -334,6 +331,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         arrTraloi = new ArrayList<>();
         sharedPreferences = getSharedPreferences("currentQuestion", MODE_PRIVATE);
         currentQuestions = sharedPreferences.getInt("currentQuestion", 0);
+        heart = sharedPreferences.getInt("heart",3);
         anim_heart = AnimationUtils.loadAnimation(this, R.anim.anim_zoomout);
         audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
     }
@@ -347,8 +345,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         if (window == null) {
             return;
         }
-        Button btnSkip;
-        btnSkip = dialog.findViewById(R.id.btnSkip);
+        Button btnSkip = dialog.findViewById(R.id.btnSkip);
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
@@ -356,11 +353,14 @@ public class ChoiGameActivity extends AppCompatActivity {
         window.setAttributes(windowAttributes);
         dialog.setCancelable(false);
         PlaySound.playSound(this, R.raw.game_over);
-
         score -= 150;
         user.setScore(score);
         db.updateScore(user.getName(), score);
         tvScore.setText(String.valueOf(user.getScore()));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("currentQuestion", currentQuestions);
+        editor.putInt("heart",heart);
+        editor.apply();
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -527,9 +527,10 @@ public class ChoiGameActivity extends AppCompatActivity {
         if (window == null) {
             return;
         }
-        TextView tvScore = dialog.findViewById(R.id.tvNewScore);
-        Button btnNext;
-        btnNext = dialog.findViewById(R.id.btnNext);
+        TextView tvScore, tvDapAn;
+        tvScore = dialog.findViewById(R.id.tvNewScore);
+        tvDapAn = dialog.findViewById(R.id.tvDapAn);
+        Button btnNext = dialog.findViewById(R.id.btnNext);
         imgStar = dialog.findViewById(R.id.imgStar);
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -545,6 +546,7 @@ public class ChoiGameActivity extends AppCompatActivity {
             imgStar.setImageResource(R.drawable.threestar);
         }
         tvScore.setText("+ " + newScore);
+        tvDapAn.setText("Đáp án: "+listQuestions.get(currentQuestions).getDapan());
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -553,8 +555,11 @@ public class ChoiGameActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        PlaySound.playClick(v.getContext());
                         currentQuestions++;
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("currentQuestion", currentQuestions);
+                        editor.putInt("heart",heart);
+                        editor.apply();
                         ViewQuestions();
                         dialog.dismiss();
                     }

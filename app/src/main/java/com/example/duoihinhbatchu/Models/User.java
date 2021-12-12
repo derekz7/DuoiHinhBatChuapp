@@ -1,6 +1,4 @@
-package com.example.duoihinhbatchu.Module;
-
-import android.text.BoringLayout;
+package com.example.duoihinhbatchu.Models;
 
 import java.io.Serializable;
 import java.util.HashMap;

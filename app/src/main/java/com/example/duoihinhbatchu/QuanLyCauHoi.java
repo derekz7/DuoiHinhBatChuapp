@@ -1,6 +1,5 @@
 package com.example.duoihinhbatchu;
 
-import static com.example.duoihinhbatchu.MainActivity.listQuestions;
 import static com.example.duoihinhbatchu.QuanLyActivity.list;
 
 import androidx.annotation.Nullable;
@@ -27,7 +26,7 @@ import android.widget.Toast;
 
 import com.example.duoihinhbatchu.Adapter.CauHoiAdapter;
 import com.example.duoihinhbatchu.Database.CauHoiDB;
-import com.example.duoihinhbatchu.Module.CauHoi;
+import com.example.duoihinhbatchu.Models.CauHoi;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.duoihinhbatchu.Module.User;
+import com.example.duoihinhbatchu.Models.User;
 import com.example.duoihinhbatchu.R;
 
 import java.util.List;

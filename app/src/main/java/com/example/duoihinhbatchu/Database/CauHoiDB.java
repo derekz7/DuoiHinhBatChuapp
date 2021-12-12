@@ -5,12 +5,11 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.duoihinhbatchu.Module.CauHoi;
+import com.example.duoihinhbatchu.Models.CauHoi;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;

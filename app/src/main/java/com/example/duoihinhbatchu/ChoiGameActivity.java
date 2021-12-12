@@ -331,7 +331,6 @@ public class ChoiGameActivity extends AppCompatActivity {
         arrTraloi = new ArrayList<>();
         sharedPreferences = getSharedPreferences("currentQuestion", MODE_PRIVATE);
         currentQuestions = sharedPreferences.getInt("currentQuestion", 0);
-        heart = sharedPreferences.getInt("heart",3);
         anim_heart = AnimationUtils.loadAnimation(this, R.anim.anim_zoomout);
         audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
     }
@@ -359,7 +358,6 @@ public class ChoiGameActivity extends AppCompatActivity {
         tvScore.setText(String.valueOf(user.getScore()));
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("currentQuestion", currentQuestions);
-        editor.putInt("heart",heart);
         editor.apply();
 
         btnSkip.setOnClickListener(new View.OnClickListener() {
@@ -547,6 +545,9 @@ public class ChoiGameActivity extends AppCompatActivity {
         }
         tvScore.setText("+ " + newScore);
         tvDapAn.setText("Đáp án: "+listQuestions.get(currentQuestions).getDapan());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("currentQuestion", (currentQuestions+1));
+        editor.apply();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -556,10 +557,6 @@ public class ChoiGameActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         currentQuestions++;
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt("currentQuestion", currentQuestions);
-                        editor.putInt("heart",heart);
-                        editor.apply();
                         ViewQuestions();
                         dialog.dismiss();
                     }

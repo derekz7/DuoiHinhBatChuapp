@@ -29,9 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.duoihinhbatchu.Adapter.UserAdapter;
-import com.example.duoihinhbatchu.Database.CauHoiDB;
+import com.example.duoihinhbatchu.Database.CauDoDB;
 import com.example.duoihinhbatchu.Database.UserDB;
-import com.example.duoihinhbatchu.Models.CauHoi;
+import com.example.duoihinhbatchu.Models.CauDo;
 import com.example.duoihinhbatchu.Models.User;
 
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     public static Animation animation, animBtn, slide_up;
     private List<User> listUser, listPlayer;
     private UserDB userDB;
-    private CauHoiDB cauHoiDB;
-    public static List<CauHoi> listQuestions;
+    private CauDoDB cauDoDB;
+    public static List<CauDo> listQuestions;
     private User user;
     private SharedPreferences sharedPreferences;
     private int currentQuestion = 0;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 PlaySound.playClick(v.getContext());
                 PlaySound.animClick(v);
                 imgLogo.startAnimation(slide_up);
-                Toast.makeText(MainActivity.this,""+currentQuestion+"|"+listQuestions.size(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this,""+currentQuestion+"|"+listQuestions.size(), Toast.LENGTH_SHORT).show();
                 if (currentQuestion == listQuestions.size() || currentQuestion ==0) {
                     btnPlay.setText("New Game");
                 } else{
@@ -157,8 +157,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        cauHoiDB = new CauHoiDB();
-        listQuestions = cauHoiDB.getListCauHoi();
+        cauDoDB = new CauDoDB();
+        listQuestions = cauDoDB.getListCauHoi();
         userDB = new UserDB();
         listUser = userDB.getDataUser();
         sharedPreferences = getSharedPreferences("currentQuestion", MODE_PRIVATE);

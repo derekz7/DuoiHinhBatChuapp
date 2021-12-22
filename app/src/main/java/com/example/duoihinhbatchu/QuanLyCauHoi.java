@@ -24,19 +24,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.duoihinhbatchu.Adapter.CauHoiAdapter;
-import com.example.duoihinhbatchu.Database.CauHoiDB;
-import com.example.duoihinhbatchu.Models.CauHoi;
+import com.example.duoihinhbatchu.Adapter.CauDoAdapter;
+import com.example.duoihinhbatchu.Database.CauDoDB;
+import com.example.duoihinhbatchu.Models.CauDo;
 
 import java.util.List;
 
 public class QuanLyCauHoi extends AppCompatActivity {
     private RecyclerView rcv_CauHoi;
     private ImageButton imbBack, btnSetting, btnAdd;
-    private List<CauHoi> cauHoiList;
-    private CauHoiAdapter cauHoiAdapter;
+    private List<CauDo> cauDoList;
+    private CauDoAdapter cauDoAdapter;
     private ImageView imgAnh;
-    private CauHoiDB cauHoiDB;
+    private CauDoDB cauDoDB;
     private Uri imgUri;
 
 
@@ -49,8 +49,8 @@ public class QuanLyCauHoi extends AppCompatActivity {
         getData();
         GridLayoutManager layoutManager =new GridLayoutManager(this,2);
         rcv_CauHoi.setLayoutManager(layoutManager);
-        cauHoiAdapter = new CauHoiAdapter(this,cauHoiList);
-        rcv_CauHoi.setAdapter(cauHoiAdapter);
+        cauDoAdapter = new CauDoAdapter(this, cauDoList);
+        rcv_CauHoi.setAdapter(cauDoAdapter);
         onClick();
     }
 
@@ -77,8 +77,8 @@ public class QuanLyCauHoi extends AppCompatActivity {
     }
 
     private void getData() {
-        cauHoiDB = new CauHoiDB();
-        cauHoiList = list;
+        cauDoDB = new CauDoDB();
+        cauDoList = list;
     }
 
     private void initUI() {
@@ -124,10 +124,10 @@ public class QuanLyCauHoi extends AppCompatActivity {
                 String dapAn = edtDapAn.getText().toString().trim();
                 if (dapAn.length() != 0 && dapAn.matches(".*[a-zA-Z].*")){
                     if (imgAnh != null){
-                        int id = cauHoiList.size();
-                        cauHoiDB.upLoadCauHoi(QuanLyCauHoi.this,id, imgUri, dapAn);
+                        int id = cauDoList.size();
+                        cauDoDB.upLoadCauHoi(QuanLyCauHoi.this,id, imgUri, dapAn);
                         getData();
-                        cauHoiAdapter.setData(cauHoiList);
+                        cauDoAdapter.setData(cauDoList);
                         dialog.dismiss();
                     }else {
                         Toast.makeText(QuanLyCauHoi.this, "Bạn chưa chọn ảnh", Toast.LENGTH_SHORT).show();

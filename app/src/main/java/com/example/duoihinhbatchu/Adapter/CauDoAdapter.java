@@ -11,20 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.duoihinhbatchu.Models.CauHoi;
+import com.example.duoihinhbatchu.Models.CauDo;
 import com.example.duoihinhbatchu.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CauHoiAdapter extends RecyclerView.Adapter<CauHoiAdapter.CauHoiViewHolder> {
+public class CauDoAdapter extends RecyclerView.Adapter<CauDoAdapter.CauHoiViewHolder> {
     private Context context;
-    private List<CauHoi> cauHoiList;
+    private List<CauDo> cauDoList;
     private onItemClickListener mListener;
 
-    public CauHoiAdapter(Context context, List<CauHoi> cauHoiList) {
+    public CauDoAdapter(Context context, List<CauDo> cauDoList) {
         this.context = context;
-        this.cauHoiList = cauHoiList;
+        this.cauDoList = cauDoList;
     }
 
     public interface onItemClickListener {
@@ -36,8 +36,8 @@ public class CauHoiAdapter extends RecyclerView.Adapter<CauHoiAdapter.CauHoiView
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setData(List<CauHoi> list) {
-        this.cauHoiList = list;
+    public void setData(List<CauDo> list) {
+        this.cauDoList = list;
         notifyDataSetChanged();
     }
 
@@ -50,19 +50,19 @@ public class CauHoiAdapter extends RecyclerView.Adapter<CauHoiAdapter.CauHoiView
 
     @Override
     public void onBindViewHolder(@NonNull CauHoiViewHolder holder, int position) {
-        CauHoi cauHoi = cauHoiList.get(position);
-        if (cauHoi == null){
+        CauDo cauDo = cauDoList.get(position);
+        if (cauDo == null){
             return;
         }
-        Picasso.get().load(cauHoi.getImgUrl()).into(holder.imgView);
-        holder.txtDapAn.setText(cauHoi.getDapan());
+        Picasso.get().load(cauDo.getImgUrl()).into(holder.imgView);
+        holder.txtDapAn.setText(cauDo.getDapan());
     }
 
     @Override
     public int getItemCount() {
-        if (cauHoiList == null) {
+        if (cauDoList == null) {
             return 0;
-        } else return cauHoiList.size();
+        } else return cauDoList.size();
 
     }
 

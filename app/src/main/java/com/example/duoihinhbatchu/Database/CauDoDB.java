@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.duoihinhbatchu.Models.CauHoi;
+import com.example.duoihinhbatchu.Models.CauDo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,17 +25,17 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CauHoiDB {
+public class CauDoDB {
     private FirebaseDatabase database;
     private DatabaseReference cauHoiRef;
     private StorageReference storeRef;
-    private List<CauHoi> listCauHoi;
+    private List<CauDo> listCauDo;
 
-    public CauHoiDB() {
+    public CauDoDB() {
         database = FirebaseDatabase.getInstance();
         cauHoiRef = database.getReference("Cauhoi");
         storeRef = FirebaseStorage.getInstance().getReference();
-        listCauHoi = new ArrayList<>();
+        listCauDo = new ArrayList<>();
     }
 
     public void upLoadCauHoi(Activity activity,int id, Uri uri, String dapAn) {
@@ -48,7 +48,7 @@ public class CauHoiDB {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        CauHoi CH = new CauHoi(id,uri.toString(),dapAn.toUpperCase());
+                        CauDo CH = new CauDo(id,uri.toString(),dapAn.toUpperCase());
                         cauHoiRef.child(String.valueOf(CH.getId())).setValue(CH);
                         progressDialog.dismiss();
                         Toast.makeText(activity, "Thêm câu hỏi thành công!", Toast.LENGTH_SHORT).show();
@@ -70,15 +70,15 @@ public class CauHoiDB {
             }
         });
     }
-    public List<CauHoi> getListCauHoi() {
+    public List<CauDo> getListCauHoi() {
 
         cauHoiRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listCauHoi.clear();
+                listCauDo.clear();
                 for (DataSnapshot snap: snapshot.getChildren()){
-                    CauHoi cauHoi = snap.getValue(CauHoi.class);
-                    listCauHoi.add(cauHoi);
+                    CauDo cauDo = snap.getValue(CauDo.class);
+                    listCauDo.add(cauDo);
                 }
             }
 
@@ -87,7 +87,7 @@ public class CauHoiDB {
 
             }
         });
-        return listCauHoi;
+        return listCauDo;
     }
     private String getFileExtension(Uri mUri, Activity activity){
         ContentResolver cr = activity.getContentResolver();

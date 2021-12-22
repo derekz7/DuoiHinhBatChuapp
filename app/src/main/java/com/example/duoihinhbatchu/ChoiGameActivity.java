@@ -35,7 +35,7 @@ import android.widget.Toast;
 
 import com.example.duoihinhbatchu.Adapter.DapAnAdapter;
 import com.example.duoihinhbatchu.Database.UserDB;
-import com.example.duoihinhbatchu.Models.CauHoi;
+import com.example.duoihinhbatchu.Models.CauDo;
 import com.example.duoihinhbatchu.Models.User;
 import com.squareup.picasso.Picasso;
 
@@ -46,7 +46,7 @@ import java.util.Random;
 
 public class ChoiGameActivity extends AppCompatActivity {
     private int timer = 30;
-    private List<CauHoi> listQuestions;
+    private List<CauDo> listQuestions;
     private TextView tvScore;
     private ProgressBar progressBar;
     private ImageButton igbSetting;
@@ -196,10 +196,10 @@ public class ChoiGameActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             arrDapan.clear();
             arrTraloi.clear();
-            CauHoi cauHoi = listQuestions.get(currentQuestions);
+            CauDo cauDo = listQuestions.get(currentQuestions);
             System.out.println(currentQuestions);
-            Picasso.get().load(cauHoi.getImgUrl()).into(imgQuestion);
-            dapan = StringUtils.xoaDauString(cauHoi.getDapan());
+            Picasso.get().load(cauDo.getImgUrl()).into(imgQuestion);
+            dapan = StringUtils.xoaDauString(cauDo.getDapan());
             showDapAn();
             showTraLoi();
             countDownTimer.start();
@@ -313,8 +313,6 @@ public class ChoiGameActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
     private void init() {
         progressBar = findViewById(R.id.progressBar);
         imgQuestion = findViewById(R.id.imgQuestion);
@@ -328,7 +326,6 @@ public class ChoiGameActivity extends AppCompatActivity {
         imgHeart[2] = findViewById(R.id.imgHeart3);
         view_heart = findViewById(R.id.view_heart);
     }
-
     private void getData() {
         db = new UserDB();
         listQuestions = MainActivity.listQuestions;

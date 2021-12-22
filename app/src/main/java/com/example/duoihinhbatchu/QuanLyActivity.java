@@ -8,15 +8,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.example.duoihinhbatchu.Database.CauHoiDB;
-import com.example.duoihinhbatchu.Models.CauHoi;
+import com.example.duoihinhbatchu.Database.CauDoDB;
+import com.example.duoihinhbatchu.Models.CauDo;
 
 import java.util.List;
 
 public class QuanLyActivity extends AppCompatActivity {
     private Button btnQLCauHoi, btnQLPlayer;
-    public static List<CauHoi> list;
-    private CauHoiDB db;
+    public static List<CauDo> list;
+    private CauDoDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class QuanLyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quan_ly);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
-        db = new CauHoiDB();
+        db = new CauDoDB();
         list = db.getListCauHoi();
         btnQLCauHoi.setOnClickListener(new View.OnClickListener() {
             @Override

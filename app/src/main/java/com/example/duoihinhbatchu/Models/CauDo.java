@@ -1,19 +1,19 @@
 package com.example.duoihinhbatchu.Models;
 
-public class CauHoi {
+public class CauDo {
     private int id;
     private String imgUrl;
     private String dapan;
 
-    public CauHoi() {
+    public CauDo() {
     }
 
-    public CauHoi(String imgUrl, String dapan) {
+    public CauDo(String imgUrl, String dapan) {
         this.imgUrl = imgUrl;
         this.dapan = dapan;
     }
 
-    public CauHoi(int id, String imgUrl, String dapan) {
+    public CauDo(int id, String imgUrl, String dapan) {
         this.id = id;
         this.imgUrl = imgUrl;
         this.dapan = dapan;

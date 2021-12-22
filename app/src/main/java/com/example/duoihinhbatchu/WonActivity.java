@@ -38,26 +38,14 @@ public class WonActivity extends AppCompatActivity {
         score = getIntent().getIntExtra("score", 0);
         circularProgressBar.setProgressMax(listQuestions.size());
         txtScore.setText("Điểm của bạn: " + score);
-        CountDownTimer count = new CountDownTimer(((correctCount / 4) + 1) * 1000L, 250) {
-            @SuppressLint("SetTextI18n")
+        circularProgressBar.setProgress(correctCount);
+        txtCorrectCount.setText(correctCount + "/" + listQuestions.size());
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                int count = (int) (circularProgressBar.getProgress() + 1);
-                circularProgressBar.setProgress(count);
-                txtCorrectCount.setText(count + "/" + listQuestions.size());
+            public void run() {
+                anim_Phao.playAnimation();
             }
-
-            @Override
-            public void onFinish() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        anim_Phao.playAnimation();
-                    }
-                }, 1000);
-
-            }
-        }.start();
+        },1500);
 
         igbExit.setOnClickListener(new View.OnClickListener() {
             @Override

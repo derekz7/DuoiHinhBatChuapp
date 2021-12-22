@@ -3,11 +3,13 @@ package com.example.duoihinhbatchu.Database;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.duoihinhbatchu.Models.CauDo;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,7 +35,7 @@ public class CauDoDB {
 
     public CauDoDB() {
         database = FirebaseDatabase.getInstance();
-        cauHoiRef = database.getReference("Cauhoi");
+        cauHoiRef = database.getReference("CauHoi");
         storeRef = FirebaseStorage.getInstance().getReference();
         listCauDo = new ArrayList<>();
     }
@@ -90,8 +92,53 @@ public class CauDoDB {
         return listCauDo;
     }
     private String getFileExtension(Uri mUri, Activity activity){
-        ContentResolver cr = activity.getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return  mime.getExtensionFromMimeType(cr.getType(mUri));
+            ContentResolver cr = activity.getContentResolver();
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            return  mime.getExtensionFromMimeType(cr.getType(mUri));
+    }
+
+    public void deleteCauDo(CauDo cauDo, Context context){
+        cauHoiRef.child(String.valueOf(cauDo.getId())).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(context, cauDo.getDapan()+" is deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void updateCauDo(Activity activity,CauDo cauDo, Uri uri, String dapAn) {
+        ProgressDialog progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Update câu đố...");
+        StorageReference fileRef = storeRef.child(dapAn.toLowerCase() + "." +getFileExtension(uri,activity));
+        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        cauDo.setDapan(dapAn);
+                        cauDo.setImgUrl(uri.toString());
+                        cauHoiRef.child(String.valueOf(cauDo.getId())).updateChildren(cauDo.toMap(), new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                progressDialog.dismiss();
+                                Toast.makeText(activity, "Update câu đố thành công!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                progressDialog.show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(activity, "Update Failed!", Toast.LENGTH_SHORT).show();
+                activity.finish();
+            }
+        });
     }
 }

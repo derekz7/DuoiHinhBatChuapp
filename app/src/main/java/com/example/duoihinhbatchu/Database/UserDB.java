@@ -16,7 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDB {
     private FirebaseDatabase database;
@@ -48,7 +50,7 @@ public class UserDB {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listUser.clear();
-                for (DataSnapshot snap: snapshot.getChildren()){
+                for (DataSnapshot snap : snapshot.getChildren()) {
                     User user = snap.getValue(User.class);
                     listUser.add(user);
                 }
@@ -62,26 +64,27 @@ public class UserDB {
         return listUser;
     }
 
-    public User getUser(String username, List<User> list){
+    public User getUser(String username, List<User> list) {
         User user = new User();
-        for (User user1: list){
-            if (user1.getName().equals(username)){
-               user = user1;
+        for (User user1 : list) {
+            if (user1.getName().equals(username)) {
+                user = user1;
             }
         }
         return user;
     }
 
-    public boolean checkUsername(List<User> list, String name){
+    public boolean checkUsername(List<User> list, String name) {
         boolean kt = true;
         for (User u : list) {
-            if (u.getName().equalsIgnoreCase(name) ){
+            if (u.getName().equalsIgnoreCase(name)) {
                 kt = false;
             }
         }
         return kt;
     }
-    public boolean checkAdmin(List<User> list, String name){
+
+    public boolean checkAdmin(List<User> list, String name) {
         boolean kt = false;
         for (User u : list) {
             if (u.getName().equals(name) && u.getIsAdmin() == 1) {
@@ -92,14 +95,36 @@ public class UserDB {
         return kt;
     }
 
-    public void updateScore(String name, int score){
+    public void updateScore(String name, int score) {
         userRef.child(name).child("score").setValue(score, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Log.d("UpdateDiem","Update diem thanh cong");
+                Log.d("UpdateDiem", "Update diem thanh cong");
             }
         });
 
+    }
+
+    public void setAdmin(User user, Context context) {
+        userRef.child(user.getName()).updateChildren(user.toMapAdmin(), new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                if (user.getIsAdmin() == 0){
+                    Toast.makeText(context, "Admin is off ", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(context, "Admin is on ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void deleteUser(User user, Context context) {
+        userRef.child(user.getName()).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(context, user.getName() + " is deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

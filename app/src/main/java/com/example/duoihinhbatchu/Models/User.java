@@ -48,4 +48,9 @@ public class User implements Serializable {
         result.put("name",name);
         return result;
     }
+    public Map<String,Object> toMapAdmin(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("isAdmin",isAdmin);
+        return result;
+    }
 }

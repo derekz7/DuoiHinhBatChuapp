@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.duoihinhbatchu">
+    package="com.example.duoihinhbatchu" >
 
     <application
         android:allowBackup="true"
@@ -10,25 +10,32 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup" >
         <activity
-            android:name=".WonActivity"
-            android:exported="true" >
-        </activity>
-        <activity
-            android:name=".QuanLyCauHoi"
+            android:name=".Admin.QuanLyUserActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".QuanLyActivity"
+            android:name=".WonActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" >
+        </activity>
+        <activity
+            android:name=".Admin.QuanLyCauHoi"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Admin.QuanLyActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="LockedOrientationActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

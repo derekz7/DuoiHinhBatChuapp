@@ -28,7 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.duoihinhbatchu.Adapter.UserAdapter;
+import com.example.duoihinhbatchu.Adapter.PlayerAdapter;
+import com.example.duoihinhbatchu.Admin.QuanLyActivity;
 import com.example.duoihinhbatchu.Database.CauDoDB;
 import com.example.duoihinhbatchu.Database.UserDB;
 import com.example.duoihinhbatchu.Models.CauDo;
@@ -127,10 +128,19 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         buttonScaleAnim();
+                        User log = userDB.getUser(user.getName(), listUser);
                         if (user.getName().equals("null")) {
                             dialogCreateUser(Gravity.CENTER);
-                        } else {
-                            User log = userDB.getUser(user.getName(), listUser);
+                        } else if (log.getName() == null){
+                            btnPlay.setText("New game");
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("countCorrect", 0);
+                            editor.putInt("currentQuestion",0);
+                            editor.apply();
+                            Toast.makeText(MainActivity.this, "Người dùng lỗi hoặc đã bị xoá khỏi hệ thống!", Toast.LENGTH_SHORT).show();
+                            dialogCreateUser(Gravity.CENTER);
+                        }else {
+                            Toast.makeText(MainActivity.this, ""+log.getName(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(MainActivity.this, ChoiGameActivity.class);
                             intent.putExtra("user", log);
                             startActivity(intent);
@@ -148,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        buttonScaleAnim();
                         dialog_Leaderboard();
                     }
                 }, 500);
@@ -237,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         mpBackground.start();
+        getData();
         super.onResume();
     }
 
@@ -330,8 +342,8 @@ public class MainActivity extends AppCompatActivity {
         sapXep();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcvUser.setLayoutManager(layoutManager);
-        UserAdapter userAdapter = new UserAdapter(listPlayer, this);
-        rcvUser.setAdapter(userAdapter);
+        PlayerAdapter playerAdapter = new PlayerAdapter(listPlayer, this);
+        rcvUser.setAdapter(playerAdapter);
         dialog.show();
     }
 

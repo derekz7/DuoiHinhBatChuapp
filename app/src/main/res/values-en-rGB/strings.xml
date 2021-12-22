@@ -16,4 +16,7 @@
     <string name="restart">Restart</string>
     <string name="yourscore">Your HightScore</string>
     <string name="share_your_score">Share your score</string>
+    <string name="admin">Admin</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 </resources>

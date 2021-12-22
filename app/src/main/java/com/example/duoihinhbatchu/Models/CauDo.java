@@ -1,5 +1,8 @@
 package com.example.duoihinhbatchu.Models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CauDo {
     private int id;
     private String imgUrl;
@@ -41,5 +44,12 @@ public class CauDo {
 
     public void setDapan(String dapan) {
         this.dapan = dapan;
+    }
+
+    public Map<String,Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("dapan",dapan);
+        result.put("imgUrl",imgUrl);
+        return result;
     }
 }

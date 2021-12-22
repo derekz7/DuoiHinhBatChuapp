@@ -22,4 +22,7 @@
     <string name="restart">Chơi lại từ đầu</string>
     <string name="yourscore">Điểm của bạn:</string>
     <string name="share_your_score">Chia sẻ điểm của bạn</string>
+    <string name="admin">Quản trị viên</string>
+    <string name="delete">Xoá</string>
+    <string name="save">Lưu</string>
 </resources>

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private CauDoDB cauDoDB;
     public static List<CauDo> listQuestions;
     private User user;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences, sharedPreferencesUser;
     private int currentQuestion = 0;
 
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 PlaySound.animClick(v);
                 imgLogo.startAnimation(slide_up);
 //                Toast.makeText(MainActivity.this,""+currentQuestion+"|"+listQuestions.size(), Toast.LENGTH_SHORT).show();
-                if (currentQuestion == listQuestions.size() || currentQuestion ==0) {
+                if (currentQuestion == listQuestions.size() || currentQuestion == 0) {
                     btnPlay.setText("New Game");
                 } else{
                     btnPlay.setText("Resume Game");
@@ -162,7 +162,10 @@ public class MainActivity extends AppCompatActivity {
         userDB = new UserDB();
         listUser = userDB.getDataUser();
         sharedPreferences = getSharedPreferences("currentQuestion", MODE_PRIVATE);
+        sharedPreferencesUser = getSharedPreferences("user", MODE_PRIVATE);
+        user = new User(sharedPreferencesUser.getString("username", "null"));
         currentQuestion = sharedPreferences.getInt("currentQuestion", 0);
+
     }
 
     private void buttonScaleAnim() {
@@ -190,8 +193,6 @@ public class MainActivity extends AppCompatActivity {
         layout_play = findViewById(R.id.layout_play);
         btnChart = findViewById(R.id.btnLeaderBoard);
         btnPlay = findViewById(R.id.btnPlayGame);
-        sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-        user = new User(sharedPreferences.getString("username", "null"));
     }
 
     private void sapXep() {
@@ -294,9 +295,9 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         user = new User(name);
                         userDB.createUser(user, getApplicationContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        SharedPreferences.Editor editor = sharedPreferencesUser.edit();
                         editor.putString("username", user.getName());
-                        editor.putString("diem", "0");
+                        editor.putInt("diem",0);
                         editor.apply();
                         dialog.dismiss();
                     }

@@ -162,6 +162,7 @@ public class ChoiGameActivity extends AppCompatActivity {
         dapAnAdapter.notifyDataSetChanged();
     }
 
+    //show tra loi
     private void showTraLoi() {
         if (dapan.length() >= 8) {
             gridViewTraLoi.setNumColumns(dapan.length() - 2);

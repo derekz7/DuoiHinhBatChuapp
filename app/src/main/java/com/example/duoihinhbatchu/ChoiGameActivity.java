@@ -192,7 +192,7 @@ public class ChoiGameActivity extends AppCompatActivity {
             intent.putExtra("countCorrect",countCorrect);
             intent.putExtra("score",score);
             startActivity(intent);
-            Toast.makeText(ChoiGameActivity.this, "End", Toast.LENGTH_SHORT).show();
+
         } else {
             progressBar.setVisibility(View.VISIBLE);
             arrDapan.clear();

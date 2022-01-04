@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Người dùng lỗi hoặc đã bị xoá khỏi hệ thống!", Toast.LENGTH_SHORT).show();
                             dialogCreateUser(Gravity.CENTER);
                         }else {
-                            Toast.makeText(MainActivity.this, ""+log.getName(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this, ""+log.getName(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(MainActivity.this, ChoiGameActivity.class);
                             intent.putExtra("user", log);
                             startActivity(intent);
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 }, 600);
             }
         });
+
         btnChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

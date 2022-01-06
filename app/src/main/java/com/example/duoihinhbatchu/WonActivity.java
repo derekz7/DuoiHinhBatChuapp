@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class WonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_won);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         init();
         correctCount = getIntent().getIntExtra("countCorrect", 0);
         score = getIntent().getIntExtra("score", 0);
@@ -96,7 +98,7 @@ public class WonActivity extends AppCompatActivity {
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_TEXT,
-                                "Tôi đã chơi, bạn đã thử chưa: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
+                                "Tôi đã phá đảo trò chơi với " +score+" điểm, bạn đã thử chưa: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID);
                         sendIntent.setType("text/plain");
                         startActivity(sendIntent);
                     }

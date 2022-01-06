@@ -61,6 +61,7 @@ public class QuanLyCauHoi extends AppCompatActivity {
         onClick();
     }
 
+
     private void onClick() {
         imbBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +128,8 @@ public class QuanLyCauHoi extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imgAnh = null;
+                imgUri = null;
                 dialog.dismiss();
             }
         });
@@ -185,6 +188,7 @@ public class QuanLyCauHoi extends AppCompatActivity {
         windowAttributes.gravity = Gravity.CENTER;
         windowAttributes.windowAnimations = R.style.DialogAnimation;
         window.setAttributes(windowAttributes);
+
         dialogUpdate.setCancelable(true);
         edtDapAn.setText(cauDo.getDapan());
         tvDapAn.setText(cauDo.getDapan());
@@ -225,7 +229,6 @@ public class QuanLyCauHoi extends AppCompatActivity {
                     if (imgAnh != null && imgUri != null){
                         cauDoDB.updateCauDo(QuanLyCauHoi.this,cauDo,imgUri,dapAn);
                         cauDoList.set(pos,cauDo);
-                        cauDoAdapter.setData(cauDoList);
                         dialogUpdate.dismiss();
                     }else {
                         Toast.makeText(QuanLyCauHoi.this, "Bạn chưa chọn ảnh", Toast.LENGTH_SHORT).show();

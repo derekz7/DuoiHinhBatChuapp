@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#004385"
+    android:background="@drawable/sky_bg"
     tools:context=".ChoiGameActivity">
 
     <LinearLayout
@@ -112,7 +112,7 @@
                         android:gravity="center"
                         android:maxHeight="25dp"
                         android:text="999"
-                        android:textColor="@color/white"
+                        android:textColor="#FF2929"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -179,7 +179,7 @@
     <GridView
         android:id="@+id/gridViewTraLoi"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"

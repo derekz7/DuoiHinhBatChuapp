@@ -72,8 +72,8 @@ public class CauDoDB {
             }
         });
     }
-    public List<CauDo> getListCauHoi() {
 
+    public List<CauDo> getListCauHoi() {
         cauHoiRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
